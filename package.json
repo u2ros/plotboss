@@ -1,7 +1,7 @@
 {
   "name": "plotboss",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "node.js utility for auto moving chia finished plots from a centralized temporary drive to a final array of destination disks in a JBOD setup",
   "main": "plotman.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
