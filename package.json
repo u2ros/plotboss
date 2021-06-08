@@ -1,0 +1,19 @@
+{
+  "name": "plotboss",
+  "version": "1.0.0",
+  "description": "",
+  "main": "plotman.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "standard": "^16.0.3"
+  },
+  "dependencies": {
+    "check-disk-space": "^2.1.0",
+    "fs-extra": "^10.0.0",
+    "yaml": "^1.10.2"
+  }
+}
