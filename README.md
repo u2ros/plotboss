@@ -62,6 +62,6 @@ queue:
   limit: 8                         #maximum number of concurrent moves
 ```
 
-After modifying your config.yaml file, start the tool with:
+After modifying your config.yaml file (or leave it as it is for the test run), start the tool with:
 
 `node plotman.mjs`
