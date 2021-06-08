@@ -24,7 +24,7 @@ TODO: Add support for automatic recognition filesystem format and mounting of ne
 - throttles move operations to one per destination
 - automatically detects, mounts new disks and updates config
 - allows on the config changes while running
-# Install
+# Install and run
 
 make sure you have node.js > 14.0 (to support module level async await).
 
@@ -61,3 +61,7 @@ delays:
 queue:
   limit: 8                         #maximum number of concurrent moves
 ```
+
+After modifying your config.yaml file, start the tool with:
+
+`node plotman.mjs`
