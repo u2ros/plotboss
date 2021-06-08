@@ -140,9 +140,9 @@ function main() {
 
   watcher = fs.watch(configPath, {}, updateConfig)
 
-  setInterval(checkPlots, config.delays.plots)
-  setInterval(movePlot, config.delays.move)
-  setInterval(checkDisks, config.delays.disks)
+  setInterval(checkPlots, config.delays.plots * 1000)
+  setInterval(movePlot, config.delays.move * 1000)
+  setInterval(checkDisks, config.delays.disks * 1000)
 }
 
 main()
