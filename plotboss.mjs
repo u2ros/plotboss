@@ -93,7 +93,6 @@ function checkPlots() {
 }
 
 async function movePlot() {
-  console.log(queue)
   /*
   picks the first plot from the queue and moves the corresponding file to an available destination
   */
