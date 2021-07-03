@@ -77,6 +77,9 @@ function checkPlots() {
   config.temps.forEach(dir => {
     const files = fs.readdirSync(dir) // TODO: try catch this
     files.forEach(file => {
+      if (config.ignore.indexOf(file) >= 0) {
+        return
+      }
       // only consider finished plots
       if (file.indexOf('.tmp') < 0) {
         // check if plot is already being moved
@@ -118,6 +121,7 @@ async function movePlot() {
     try {
       await fs.move(src, tmpdst)
       await fs.rename(tmpdst, finaldst)
+      console.log(`finished moving plot ${plotname}`)
     } catch (err) {
       console.log(err)
       return // don't remove task from queue, something was wrong
