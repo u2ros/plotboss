@@ -93,6 +93,7 @@ function checkPlots() {
 }
 
 async function movePlot() {
+  console.log(queue)
   /*
   picks the first plot from the queue and moves the corresponding file to an available destination
   */
@@ -103,7 +104,19 @@ async function movePlot() {
   }
 
   if (queue.length > 0) {
-    const [dir, plotname] = queue[0]
+    let task = null
+    let idx = 0
+    for (idx = 0; idx < queue.length; idx++) {
+      if (queue[idx].length === 3) {
+        continue
+      }
+      task = queue[idx]
+      break
+    }
+    if (!task) {
+      return
+    }
+    const [dir, plotname] = queue[idx]
     const src = path.join(dir, plotname)
 
     const dst = await getDestination(src)
@@ -113,6 +126,7 @@ async function movePlot() {
     }
 
     console.log(`moving plot ${src} to ${dst}`)
+    queue[idx].push(dst)
 
     const tmpdst = path.join(dst, `${plotname}.tmp`)
     const finaldst = path.join(dst, plotname)
@@ -128,7 +142,7 @@ async function movePlot() {
     }
 
     // remove from pending plots
-    queue.shift()
+    queue.splice(idx, 1)
   }
 }
 
