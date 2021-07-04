@@ -97,7 +97,8 @@ async function movePlot() {
   picks the first plot from the queue and moves the corresponding file to an available destination
   */
   // throttle if concurrency limit is reached
-  if (queue.reduce((acc, curVal) => curVal.length === 3 ? acc++ : acc, 0) >= config.queue.limit) {
+  const active = queue.reduce((acc, curVal) => curVal.length === 3 ? ++acc : acc, 0)
+  if (active >= config.queue.limit) {
     console.log('queue limit reached')
     return
   }
@@ -115,6 +116,7 @@ async function movePlot() {
     if (!task) {
       return
     }
+
     const [dir, plotname] = queue[idx]
     const src = path.join(dir, plotname)
 
@@ -134,6 +136,8 @@ async function movePlot() {
     try {
       await fs.move(src, tmpdst)
       await fs.rename(tmpdst, finaldst)
+      console.log(tmpdst)
+      console.log(finaldst)
       console.log(`finished moving plot ${plotname}`)
     } catch (err) {
       console.log(err)
@@ -141,6 +145,7 @@ async function movePlot() {
     }
 
     // remove from pending plots
+    idx = queue.indexOf(task) // idx may have changed if some other files was copied
     queue.splice(idx, 1)
   }
 }
