@@ -12,6 +12,8 @@ Typical hardware setup this app is intended for:
 - server with a temporary drive for incoming finished plots and a JBOD
 - several independent nodes (PCs) acting as plotters with the same temporary destination drive residing on a network server that also exposes disks in a JBOD fashion (this server runs plotboss)
 
+![Concept](./concept.jpg)
+
 TODO: Add support for automatic recognition filesystem format and mounting of newly added disks.
 
 # Functionality
@@ -21,7 +23,7 @@ TODO: Add support for automatic recognition filesystem format and mounting of ne
 - automatically removes full destinations from destination list
 - throttles move operations to one per destination
 - allows on fly the config changes while running
--
+
 # Install and run
 
 make sure you have node.js > 14.0 (to support module level async await).
