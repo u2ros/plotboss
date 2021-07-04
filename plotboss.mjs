@@ -7,6 +7,7 @@ let watcher = null
 const configPath = 'config.yaml'
 let config = { }
 const queue = []
+let lastMsg = ''
 
 function updateConfig() {
   config = yaml.parse(fs.readFileSync(configPath, 'utf8'))
@@ -99,7 +100,10 @@ async function movePlot() {
   // throttle if concurrency limit is reached
   const active = queue.reduce((acc, curVal) => curVal.length === 3 ? ++acc : acc, 0)
   if (active >= config.queue.limit) {
-    console.log('queue limit reached')
+    if (lastMsg !== 'queue limit reached') {
+      lastMsg = 'queue limit reached'
+      console.log(lastMsg)
+    }
     return
   }
 
