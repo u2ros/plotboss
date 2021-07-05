@@ -9,6 +9,11 @@ let config = { }
 const queue = []
 let lastMsg = ''
 
+function log(message) {
+  const timestamp = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+  console.log(`${timestamp}: ${message}`)
+}
+
 function updateConfig() {
   config = yaml.parse(fs.readFileSync(configPath, 'utf8'))
 }
@@ -53,7 +58,7 @@ async function getDestination(src) {
       fsize = fs.statSync(src).size
     }
     catch (err) {
-      console.log(err)
+      log(err)
       return null
     }
 
@@ -61,7 +66,7 @@ async function getDestination(src) {
       dst = candidate
       break
     } else {
-      console.log(`destination ${candidate} full, removing from config`)
+      log(`destination ${candidate} full, removing from config`)
       let idx = config.destinations.indexOf(candidate)
       config.destinations.splice(idx, 1)
       i-- // because size of config.destinations is reduced by 1
@@ -85,7 +90,7 @@ function checkPlots() {
       if (file.indexOf('.tmp') < 0) {
         // check if plot is already being moved
         if (!queue.reduce((acc, curVal) => { return acc || (curVal [0] == dir && curVal[1] == file) }, false)) {
-          console.log(`found new plot: ${file}, adding to queue`)
+          log(`found new plot: ${file}, adding to queue`)
           queue.push([dir, file])
         }
       }
@@ -100,9 +105,9 @@ async function movePlot() {
   // throttle if concurrency limit is reached
   const active = queue.reduce((acc, curVal) => curVal.length === 3 ? ++acc : acc, 0)
   if (active >= config.queue.limit) {
-    if (lastMsg !== 'queue limit reached') {
+    if (lastMsg.indexOf('queue limit reached') >= 0) {
       lastMsg = 'queue limit reached'
-      console.log(lastMsg)
+      log(lastMsg)
     }
     return
   }
@@ -126,11 +131,11 @@ async function movePlot() {
 
     const dst = await getDestination(src)
     if (dst === null) {
-      console.log(`no suitable destinations found for plot ${src}, add new destinations to the config file`)
+      log(`no suitable destinations found for plot ${src}, add new destinations to the config file`)
       return
     }
 
-    console.log(`moving plot ${src} to ${dst}`)
+    log(`moving plot ${src} to ${dst}`)
     queue[idx].push(dst)
 
     const tmpdst = path.join(dst, `${plotname}.tmp`)
@@ -138,13 +143,12 @@ async function movePlot() {
 
     // move to destination
     try {
+      const start = Date.now()
       await fs.move(src, tmpdst)
       await fs.rename(tmpdst, finaldst)
-      console.log(tmpdst)
-      console.log(finaldst)
-      console.log(`finished moving plot ${plotname}`)
+      log(`finished moving plot ${plotname} in ${((Date.now() - start) / 1000.0).toFixed(1)} seconds`)
     } catch (err) {
-      console.log(err)
+      log(err)
       return // don't remove task from queue, something was wrong
     }
 
