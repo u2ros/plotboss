@@ -40,8 +40,8 @@ echo "  - $(pwd)/test/dest1" >> config.yaml
 echo "  - $(pwd)/test/dest2" >> config.yaml
 echo "  - $(pwd)/test/dest3" >> config.yaml
 echo "delays:" >> config.yaml
-echo "  disks: 5000" >> config.yaml
-echo "  plots: 5000" >> config.yaml
-echo "  move: 5000" >> config.yaml
+echo "  disks: 5" >> config.yaml
+echo "  plots: 5" >> config.yaml
+echo "  move: 5" >> config.yaml
 echo "queue:" >> config.yaml
 echo "  limit: 8" >> config.yaml
