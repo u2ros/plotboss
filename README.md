@@ -38,7 +38,7 @@ To get some feeling how the app works, run the test setup script:
 
 `./test_setup.sh`
 
-This will create a directory called test, inside it, 2 temp and 3 dest directories. A bunch of 0.35Mb plot files will also be created in both temp directories. Dest folder will be changed to 1Mb ramdisks to simulate the behavior of the app.
+This will create a directory called test, inside it, 2 temp and 3 dest directories. A bunch of 0.35Mb dummy plot files will also be created in both temp directories. Dest folders will be changed to 1Mb ramdisks to simulate the behavior of the app. Each ramdisk will hold max 2 350kb files, once the plot count reaches 2, that destination will be removed from desination drives in the config.
 
 A default config file will also be created, which you can modify to your needs. (yours will look slightly different depending on where you cloned the repo)
 
