@@ -2,7 +2,9 @@ import fs from 'fs-extra'
 import path from 'path'
 import yaml from 'yaml'
 import space from 'check-disk-space'
+import c from 'ansi-colors'
 
+const colors = ['green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'gray']
 let watcher = null
 const configPath = 'config.yaml'
 let config = { }
@@ -15,6 +17,7 @@ function log(message) {
 }
 
 function updateConfig() {
+  log(c.bold.green('config change detected, reloading config'))
   config = yaml.parse(fs.readFileSync(configPath, 'utf8'))
 }
 
@@ -66,7 +69,7 @@ async function getDestination(src) {
       dst = candidate
       break
     } else {
-      log(`destination ${candidate} full, removing from config`)
+      log(c.bold.red(`destination ${candidate} full, removing from config`))
       let idx = config.destinations.indexOf(candidate)
       config.destinations.splice(idx, 1)
       i-- // because size of config.destinations is reduced by 1
@@ -90,7 +93,7 @@ function checkPlots() {
       if (file.indexOf('.tmp') < 0) {
         // check if plot is already being moved
         if (!queue.reduce((acc, curVal) => { return acc || (curVal [0] == dir && curVal[1] == file) }, false)) {
-          log(`found new plot: ${file}, adding to queue`)
+          log(c.bold.green(`found new plot: ${file}, adding to queue`))
           queue.push([dir, file])
         }
       }
@@ -106,7 +109,7 @@ async function movePlot() {
   const active = queue.reduce((acc, curVal) => curVal.length === 3 ? ++acc : acc, 0)
   if (active >= config.queue.limit) {
     if (lastMsg.indexOf('queue limit reached') >= 0) {
-      lastMsg = 'queue limit reached'
+      lastMsg = c.bold.red('queue limit reached')
       log(lastMsg)
     }
     return
@@ -131,11 +134,12 @@ async function movePlot() {
 
     const dst = await getDestination(src)
     if (dst === null) {
-      log(`no suitable destinations found for plot ${src}, add new destinations to the config file`)
+      log(c.bold.red(`no suitable destinations found for plot ${src}, add new destinations to the config file`))
       return
     }
 
-    log(`moving plot ${src} to ${dst}`)
+    const color = colors[Math.floor(Math.random() * colors.length)]
+    log(c[color](`moving plot ${src} to ${dst}`))
     queue[idx].push(dst)
 
     const tmpdst = path.join(dst, `${plotname}.tmp`)
@@ -146,7 +150,7 @@ async function movePlot() {
       const start = Date.now()
       await fs.move(src, tmpdst)
       await fs.rename(tmpdst, finaldst)
-      log(`finished moving plot ${plotname} in ${((Date.now() - start) / 1000.0).toFixed(1)} seconds`)
+      log(c[color](`finished moving plot ${plotname} in ${((Date.now() - start) / 1000.0).toFixed(1)} seconds`))
     } catch (err) {
       log(err)
       return // don't remove task from queue, something was wrong
