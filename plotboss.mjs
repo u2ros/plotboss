@@ -4,7 +4,8 @@ import yaml from 'yaml'
 import space from 'check-disk-space'
 import c from 'ansi-colors'
 
-const colors = ['green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'gray']
+const colors = ['white', 'yellow', 'red', 'green', 'blue', 'cyan', 'magenta', 'gray']
+let colorIdx = 0
 let watcher = null
 const configPath = 'config.yaml'
 let config = { }
@@ -109,7 +110,7 @@ async function movePlot() {
   const active = queue.reduce((acc, curVal) => curVal.length === 3 ? ++acc : acc, 0)
   if (active >= config.queue.limit) {
     if (lastMsg.indexOf('queue limit reached') >= 0) {
-      lastMsg = c.bold.red('queue limit reached')
+      lastMsg = c.red('queue limit reached')
       log(lastMsg)
     }
     return
@@ -138,7 +139,8 @@ async function movePlot() {
       return
     }
 
-    const color = colors[Math.floor(Math.random() * colors.length)]
+    const color = colors[colorIdx]
+    colorIdx = ++colorIdx === colors.length ? 0 : ++colorIdx
     log(c[color](`moving plot ${src} to ${dst}`))
     queue[idx].push(dst)
 
