@@ -33,8 +33,8 @@ head -c 350000 </dev/urandom > test/temp2/8.plot
 echo "temps:" > config.yaml
 echo "  - $(pwd)/test/temp1" >> config.yaml
 echo "  - $(pwd)/test/temp2" >> config.yaml
-echo "ignore:"
-echo " - lost+found"
+echo "ignore:" >> config.yaml
+echo " - lost+found" >> config.yaml
 echo "destinations:" >> config.yaml
 echo "  - $(pwd)/test/dest1" >> config.yaml
 echo "  - $(pwd)/test/dest2" >> config.yaml
