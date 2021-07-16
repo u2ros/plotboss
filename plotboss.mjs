@@ -4,7 +4,7 @@ import yaml from 'yaml'
 import space from 'check-disk-space'
 import c from 'ansi-colors'
 
-const colors = ['white', 'yellow', 'red', 'green', 'blue', 'cyan', 'magenta', 'grey']
+const colors = ['yellow', 'red', 'green', 'blue', 'cyan', 'magenta', 'grey']
 let colorIdx = 0
 let watcher = null
 const configPath = 'config.yaml'
@@ -18,7 +18,7 @@ function log(message) {
 }
 
 function updateConfig() {
-  log(c.bold.green('config change detected, reloading config'))
+  log(c.bold.white('** config change detected, reloading config **'))
   config = yaml.parse(fs.readFileSync(configPath, 'utf8'))
 }
 
@@ -70,7 +70,7 @@ async function getDestination(src) {
       dst = candidate
       break
     } else {
-      log(c.bold.red(`destination ${candidate} full, removing from config`))
+      log(c.bold.white(`** destination ${candidate} full, removing from config **`))
       let idx = config.destinations.indexOf(candidate)
       config.destinations.splice(idx, 1)
       i-- // because size of config.destinations is reduced by 1
@@ -94,7 +94,7 @@ function checkPlots() {
       if (file.indexOf('.tmp') < 0) {
         // check if plot is already being moved
         if (!queue.reduce((acc, curVal) => { return acc || (curVal [0] == dir && curVal[1] == file) }, false)) {
-          log(c.bold.green(`found new plot: ${file}, adding to queue`))
+          log(c.bold.white(`** found new plot: ${file}, adding to queue **`))
           queue.push([dir, file])
         }
       }
