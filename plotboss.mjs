@@ -4,7 +4,7 @@ import yaml from 'yaml'
 import space from 'check-disk-space'
 import c from 'ansi-colors'
 
-const colors = ['white', 'yellow', 'red', 'green', 'blue', 'cyan', 'magenta', 'gray']
+const colors = ['white', 'yellow', 'red', 'green', 'blue', 'cyan', 'magenta', 'grey']
 let colorIdx = 0
 let watcher = null
 const configPath = 'config.yaml'
@@ -140,7 +140,7 @@ async function movePlot() {
     }
 
     const color = colors[colorIdx]
-    colorIdx = ++colorIdx === colors.length ? 0 : ++colorIdx
+    colorIdx = ++colorIdx === colors.length ? 0 : colorIdx
     log(c[color](`moving plot ${src} to ${dst}`))
     queue[idx].push(dst)
 
