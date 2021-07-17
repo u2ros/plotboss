@@ -29,7 +29,7 @@ TODO: Add support for automatic recognition filesystem format and mounting of ne
 make sure you have node.js > 14.0 (to support module level async await).
 
 ```
-git clone](https://github.com/u2ros/plotboss.git
+git clone https://github.com/u2ros/plotboss.git
 cd plotman
 npm install
 ```
