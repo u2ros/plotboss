@@ -43,7 +43,7 @@ This will create a directory called test, inside it, 2 temp and 3 dest directori
 A default config file will also be created, which you can modify to your needs. (yours will look slightly different depending on where you cloned the repo)
 
 ```
-temps:                             #list of temprary folders, at least one
+temps:                             #list of temporary folders, at least one
   - /home/dev/plotboss/test/temp1
   - /home/dev/plotboss/test/temp2
 ignore:                            #these names will be ignored, no pattern matching here, just literals
