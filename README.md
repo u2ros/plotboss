@@ -18,11 +18,11 @@ TODO: Add support for automatic recognition filesystem format and mounting of ne
 
 # Functionality
 
-- automatically detects plots from the list of specified temp folders (ignores .tmp files and entires in the ignore section of the config file)
+- automatically detects plots from the list of specified temp folders (ignores .tmp files and entries in the ignore section of the config file)
 - automatically load balances moving of plots to destinations (individual disks)
 - automatically removes full destinations from destination list
 - throttles move operations to one per destination
-- allows on fly the config changes while running
+- allows on fly the config changes while running (watch out for auto-save function in your editor, it may save an invalid state and crash the app)
 
 # Install and run
 
