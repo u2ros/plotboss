@@ -63,7 +63,7 @@ queue:
 
 After modifying your config.yaml file (or leave it as it is for the test run), start the tool with:
 
-`node plotman.mjs`
+`node plotboss.mjs`
 
 After testing, remove the mounts and test dir by running:
 
