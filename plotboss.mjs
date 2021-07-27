@@ -91,7 +91,7 @@ function checkPlots() {
         return
       }
       // only consider finished plots
-      if (file.indexOf('.tmp') < 0) {
+      if (path.extname(file) === '.plot') {
         // check if plot is already being moved
         if (!queue.reduce((acc, curVal) => { return acc || (curVal [0] == dir && curVal[1] == file) }, false)) {
           log(c.bold.white(`** found new plot: ${file}, adding to queue **`))
